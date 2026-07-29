@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Cormorant_Garamond,
-  Great_Vibes,
-  Montserrat,
-} from "next/font/google";
+import { Cormorant_Garamond, Great_Vibes } from "next/font/google";
 import "./globals.css";
 
 const serif = Cormorant_Garamond({
@@ -16,12 +12,6 @@ const script = Great_Vibes({
   variable: "--font-script",
   subsets: ["latin"],
   weight: "400",
-});
-
-const sans = Montserrat({
-  variable: "--font-sans",
-  subsets: ["cyrillic", "latin"],
-  weight: ["300", "400", "500", "600"],
 });
 
 export function generateMetadata(): Metadata {
@@ -68,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${serif.variable} ${script.variable} ${sans.variable}`}>
+      <body className={`${serif.variable} ${script.variable}`}>
         {children}
       </body>
     </html>

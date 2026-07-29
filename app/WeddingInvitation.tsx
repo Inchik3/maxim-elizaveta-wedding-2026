@@ -459,7 +459,7 @@ export function WeddingInvitation({
                 </div>
                 <img
                   className="hero-frame__art"
-                  src={`${assetPrefix}/images/swan-frame.png`}
+                  src={`${assetPrefix}/images/swan-frame-transparent.png`}
                   alt=""
                   aria-hidden="true"
                 />
