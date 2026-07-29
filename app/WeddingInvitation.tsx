@@ -65,6 +65,50 @@ function Ornament() {
   );
 }
 
+type ScheduleIconName = "rings" | "transfer" | "banquet" | "party";
+
+function ScheduleIcon({ name }: { name: ScheduleIconName }) {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      role="img"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {name === "rings" && (
+        <>
+          <circle cx="24" cy="36" r="13" />
+          <circle cx="40" cy="36" r="13" />
+          <path d="m27 20 5-8 5 8-5 5-5-5Z" />
+          <path d="M29 14h6" />
+        </>
+      )}
+      {name === "transfer" && (
+        <>
+          <path d="M12 19h40a4 4 0 0 1 4 4v22H8V23a4 4 0 0 1 4-4Z" />
+          <path d="M14 25h11v10H14zm15 0h11v10H29zm15 0h6v10h-6M8 39h48" />
+          <circle cx="18" cy="48" r="5" />
+          <circle cx="46" cy="48" r="5" />
+          <path d="M12 15h24" />
+        </>
+      )}
+      {name === "banquet" && (
+        <>
+          <path d="M10 43h44M16 43c1-15 8-23 16-23s15 8 16 23" />
+          <path d="M29 14h6M32 14v6M8 49h48" />
+          <path d="M21 34c3-6 7-9 11-9" />
+        </>
+      )}
+      {name === "party" && (
+        <>
+          <path d="M20 15v27a6 6 0 1 1-4-5.7V21l25-6v22a6 6 0 1 1-4-5.7V19l-17 4" />
+          <path d="m48 11 1.5 4.5L54 17l-4.5 1.5L48 23l-1.5-4.5L42 17l4.5-1.5L48 11Z" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 function IntroEnvelope({
   state,
   onOpen,
@@ -181,16 +225,6 @@ export function WeddingInvitation({
   const [demoMode, setDemoMode] = useState(false);
 
   useEffect(() => {
-    try {
-      if (window.sessionStorage.getItem("wedding-intro-opened") === "yes") {
-        setIntroVisible(false);
-      }
-    } catch {
-      setIntroVisible(true);
-    }
-  }, []);
-
-  useEffect(() => {
     document.body.style.overflow = introVisible ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -217,14 +251,19 @@ export function WeddingInvitation({
 
   const openInvitation = () => {
     if (introState === "opening") return;
+
+    const audio = audioRef.current;
+    if (audio && !audioUnavailable) {
+      audio.volume = 0.35;
+      void audio
+        .play()
+        .then(() => setPlaying(true))
+        .catch(() => setPlaying(false));
+    }
+
     setIntroState("opening");
 
     window.setTimeout(() => {
-      try {
-        window.sessionStorage.setItem("wedding-intro-opened", "yes");
-      } catch {
-        // Сайт продолжит работу и без доступа к хранилищу.
-      }
       setIntroVisible(false);
       window.requestAnimationFrame(() => heroRef.current?.focus());
     }, 2400);
@@ -384,7 +423,8 @@ export function WeddingInvitation({
           <audio
             ref={audioRef}
             src={`${assetPrefix}/audio/wedding-song.mp3`}
-            preload="none"
+            preload="auto"
+            loop
             onEnded={() => setPlaying(false)}
             onError={() => {
               setAudioUnavailable(true);
@@ -409,17 +449,20 @@ export function WeddingInvitation({
             </div>
 
             <div className="hero__portrait-wrap" data-reveal>
-              <div className="hero__portrait">
+              <div className="hero-frame">
+                <div className="hero-frame__photo">
+                  <img
+                    src={`${assetPrefix}/images/maxim-elizaveta.jpg`}
+                    alt="Максим и Елизавета"
+                    fetchPriority="high"
+                  />
+                </div>
                 <img
-                  src={`${assetPrefix}/images/maxim-elizaveta.jpg`}
-                  alt="Максим и Елизавета"
-                  fetchPriority="high"
+                  className="hero-frame__art"
+                  src={`${assetPrefix}/images/swan-frame.png`}
+                  alt=""
+                  aria-hidden="true"
                 />
-              </div>
-              <div className="swans" aria-label="Два белых лебедя">
-                <span>🦢</span>
-                <b>♡</b>
-                <span>🦢</span>
               </div>
             </div>
           </div>
@@ -480,14 +523,14 @@ export function WeddingInvitation({
             <h2>Программа дня</h2>
             <div className="schedule__line">
               {[
-                ["14:35", "◇", "ЗАГС"],
-                ["16:00–18:00", "♧", "Прогулка на трансфере"],
-                ["18:00", "♢", "Начало банкета"],
-                ["23:00", "✦", "Дискотека"],
+                ["14:35", "rings", "ЗАГС"],
+                ["16:00–18:00", "transfer", "Прогулка на трансфере"],
+                ["18:00", "banquet", "Начало банкета"],
+                ["23:00", "party", "Дискотека"],
               ].map(([time, icon, label]) => (
                 <article className="schedule__event" key={time}>
                   <span className="schedule__icon" aria-hidden="true">
-                    {icon}
+                    <ScheduleIcon name={icon as ScheduleIconName} />
                   </span>
                   <time>{time}</time>
                   <p>{label}</p>
