@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Bad_Script, Great_Vibes } from "next/font/google";
+import { Cormorant_Garamond, Pattaya } from "next/font/google";
 import "./globals.css";
 
-const handwriting = Bad_Script({
-  variable: "--font-hand",
+const display = Pattaya({
+  variable: "--font-display",
   subsets: ["cyrillic", "latin"],
   weight: "400",
 });
 
-const script = Great_Vibes({
-  variable: "--font-script",
-  subsets: ["latin"],
-  weight: "400",
+const body = Cormorant_Garamond({
+  variable: "--font-body",
+  subsets: ["cyrillic", "latin"],
+  weight: ["400", "500", "600"],
 });
 
 export function generateMetadata(): Metadata {
@@ -58,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${handwriting.variable} ${script.variable}`}>
+      <body className={`${display.variable} ${body.variable}`}>
         {children}
       </body>
     </html>
