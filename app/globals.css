@@ -769,14 +769,17 @@ h2 {
 
 .calendar-card {
   position: relative;
-  width: min(920px, 100%);
+  width: min(640px, 100%);
   margin: 0 auto;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 38px 38px 8px 8px;
   background:
-    linear-gradient(100deg, rgba(255, 237, 219, 0.82), rgba(255, 239, 242, 0.8)),
-    rgba(255, 250, 247, 0.8);
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 16px,
+      rgba(255, 255, 255, 0.4) 16px 17px
+    ),
+    linear-gradient(135deg, rgba(255, 237, 216, 0.94), rgba(255, 242, 231, 0.9));
   box-shadow:
     0 22px 60px rgba(82, 62, 52, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.86);
@@ -787,60 +790,64 @@ h2 {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: clamp(30px, 5vw, 58px) clamp(18px, 5vw, 60px) 22px;
+  padding: clamp(32px, 5vw, 52px) clamp(18px, 5vw, 46px) clamp(36px, 5vw, 52px);
   color: #2f2925;
   text-align: center;
 }
 
-.calendar-card h2 {
-  margin: 0 0 clamp(18px, 4vw, 38px);
-  color: #29231f;
+.calendar-card__save {
+  margin-bottom: clamp(28px, 5vw, 46px);
+  color: #8e7d70;
   font-family: var(--font-body), "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(2.8rem, 7vw, 5.25rem);
+  font-size: clamp(0.68rem, 1.8vw, 0.84rem);
+  letter-spacing: 0.31em;
+}
+
+.calendar-card h2 {
+  margin: 0 0 clamp(24px, 5vw, 40px);
+  color: #493b32;
+  font-family: var(--font-body), "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
   font-weight: 400;
-  font-style: italic;
   line-height: 1;
+  letter-spacing: 0.13em;
 }
 
-.calendar-strip {
+.calendar-month {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  align-items: center;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   width: 100%;
+  padding: clamp(20px, 4vw, 32px);
+  background: rgba(255, 250, 244, 0.38);
 }
 
-.calendar-strip__day {
-  position: relative;
+.calendar-month__weekday,
+.calendar-month__day {
   display: grid;
   place-items: center;
-  min-height: clamp(86px, 14vw, 136px);
-  color: #2b2521;
+  height: clamp(36px, 7vw, 52px);
+  color: #73675f;
   font-family: var(--font-body), "Cormorant Garamond", Georgia, serif;
-  text-decoration: none;
+  font-size: clamp(0.82rem, 2.2vw, 1rem);
+  font-weight: 400;
   line-height: 1;
 }
 
-.calendar-strip__day b {
-  position: relative;
-  z-index: 2;
-  font-size: clamp(2.2rem, 6.7vw, 5.1rem);
-  font-weight: 300;
+.calendar-month__weekday {
+  color: #665a52;
+  font-size: clamp(0.7rem, 2vw, 0.84rem);
 }
 
-.calendar-strip__heart {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  color: #d8c7af;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(6.6rem, 15vw, 10.2rem);
-  line-height: 1;
-  transform: translate(-50%, -48%);
-}
-
-.calendar-strip__heart::before {
-  content: "♥";
+.calendar-month__day--wedding {
+  width: clamp(34px, 7vw, 44px);
+  height: clamp(34px, 7vw, 44px);
+  align-self: center;
+  justify-self: center;
+  border: 1px solid rgba(92, 75, 64, 0.72);
+  border-radius: 50%;
+  color: #493b32;
+  background: rgba(226, 210, 192, 0.36);
+  box-shadow: 0 4px 12px rgba(82, 62, 52, 0.08);
 }
 
 .countdown {
