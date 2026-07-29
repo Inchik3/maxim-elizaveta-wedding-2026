@@ -25,6 +25,7 @@ type SubmitState = "idle" | "submitting" | "success" | "error";
 
 type WeddingInvitationProps = {
   rsvpScriptUrl: string;
+  assetPrefix: string;
 };
 
 function getCountdown() {
@@ -161,6 +162,7 @@ function LocationCard({
 
 export function WeddingInvitation({
   rsvpScriptUrl,
+  assetPrefix,
 }: WeddingInvitationProps) {
   const countdown = useCountdown();
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -381,7 +383,7 @@ export function WeddingInvitation({
           </button>
           <audio
             ref={audioRef}
-            src="/audio/wedding-song.mp3"
+            src={`${assetPrefix}/audio/wedding-song.mp3`}
             preload="none"
             onEnded={() => setPlaying(false)}
             onError={() => {
@@ -409,7 +411,7 @@ export function WeddingInvitation({
             <div className="hero__portrait-wrap" data-reveal>
               <div className="hero__portrait">
                 <img
-                  src="/images/maxim-elizaveta.jpg"
+                  src={`${assetPrefix}/images/maxim-elizaveta.jpg`}
                   alt="Максим и Елизавета"
                   fetchPriority="high"
                 />

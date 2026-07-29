@@ -12,6 +12,12 @@ export default function Home() {
     process.env.VITE_RSVP_SCRIPT_URL ??
     process.env.NEXT_PUBLIC_RSVP_SCRIPT_URL ??
     "";
+  const assetPrefix = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-  return <WeddingInvitation rsvpScriptUrl={rsvpScriptUrl} />;
+  return (
+    <WeddingInvitation
+      rsvpScriptUrl={rsvpScriptUrl}
+      assetPrefix={assetPrefix}
+    />
+  );
 }

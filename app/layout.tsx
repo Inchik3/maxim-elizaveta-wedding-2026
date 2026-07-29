@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Marck_Script } from "next/font/google";
-import { headers } from "next/headers";
 import "./globals.css";
 
 const serif = Cormorant_Garamond({
@@ -15,19 +14,18 @@ const script = Marck_Script({
   weight: "400",
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("host") ?? "localhost:3000";
-  const forwardedProtocol = requestHeaders.get("x-forwarded-proto");
-  const protocol =
-    forwardedProtocol ?? (host.startsWith("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
+export function generateMetadata(): Metadata {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    "https://inchik3.github.io/maxim-elizaveta-wedding-2026";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const title = "Максим & Елизавета — свадебное приглашение";
   const description =
     "Приглашаем вас разделить с нами день рождения нашей семьи — 29 августа 2026 года.";
+  const socialImageUrl = `${siteUrl}${basePath}/og.png`;
 
   return {
-    metadataBase: new URL(origin),
+    metadataBase: new URL(`${siteUrl}${basePath}/`),
     title,
     description,
     openGraph: {
@@ -37,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "ru_RU",
       images: [
         {
-          url: `${origin}/og.png`,
+          url: socialImageUrl,
           width: 1735,
           height: 909,
           alt: "Максим и Елизавета — 29 августа 2026",
@@ -48,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: [`${origin}/og.png`],
+      images: [socialImageUrl],
     },
   };
 }

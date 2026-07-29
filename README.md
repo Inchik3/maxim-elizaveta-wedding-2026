@@ -15,6 +15,23 @@ Production-сборка:
 npm run build
 ```
 
+Статическая сборка для GitHub Pages:
+
+```bash
+npm run build:github
+```
+
+## GitHub Pages
+
+Workflow `.github/workflows/deploy-pages.yml` автоматически собирает и
+публикует сайт после каждого обновления ветки `main`.
+
+Публичный адрес:
+
+```text
+https://inchik3.github.io/maxim-elizaveta-wedding-2026/
+```
+
 ## Анкета гостя
 
 Чтобы ответы отправлялись в Google Sheets:
