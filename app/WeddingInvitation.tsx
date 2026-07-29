@@ -144,7 +144,15 @@ function IntroEnvelope({
         </div>
         <div className="envelope">
           <img
-            className="envelope__art"
+            className="envelope__art envelope__art--closed"
+            src={`${assetPrefix}/images/lace-envelope-closed.png`}
+            alt=""
+            width={1024}
+            height={1536}
+            aria-hidden="true"
+          />
+          <img
+            className="envelope__art envelope__art--open"
             src={`${assetPrefix}/images/lace-envelope.png`}
             alt=""
             width={853}
