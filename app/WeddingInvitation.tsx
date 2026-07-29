@@ -20,12 +20,7 @@ const DRINKS = [
   "Свой вариант",
 ] as const;
 
-const AUGUST_2026 = [
-  ...Array.from({ length: 5 }, () => null),
-  ...Array.from({ length: 31 }, (_, index) => index + 1),
-];
-
-const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+const WEDDING_WEEK = [27, 28, 29, 30, 31] as const;
 
 type Attendance = "" | "yes" | "no";
 type SubmitState = "idle" | "submitting" | "success" | "error";
@@ -510,47 +505,28 @@ export function WeddingInvitation({
 
         <section className="calendar-section section" aria-labelledby="calendar-title">
           <div className="calendar-card" data-reveal>
-            <img
-              className="calendar-card__background"
-              src={`${assetPrefix}/images/calendar-swan-frame.png`}
-              alt=""
-              width={675}
-              height={1200}
-              aria-hidden="true"
-            />
             <div className="calendar-card__content">
-              <span className="calendar-card__eyebrow">Сохраняйте дату</span>
-              <h2 id="calendar-title">Август</h2>
-              <strong className="calendar-card__year">2026</strong>
-              <div className="calendar-grid" aria-label="Календарь на август 2026">
-                {WEEKDAYS.map((day) => (
-                  <span className="calendar-grid__weekday" key={day}>
-                    {day}
-                  </span>
+              <h2 id="calendar-title">Август 2026</h2>
+              <div
+                className="calendar-strip"
+                aria-label="Дата свадьбы — 29 августа 2026"
+              >
+                {WEDDING_WEEK.map((day) => (
+                  <time
+                    className={`calendar-strip__day ${
+                      day === 29 ? "calendar-strip__day--wedding" : ""
+                    }`}
+                    dateTime={`2026-08-${day}`}
+                    aria-current={day === 29 ? "date" : undefined}
+                    key={day}
+                  >
+                    {day === 29 && (
+                      <span className="calendar-strip__heart" aria-hidden="true" />
+                    )}
+                    <b>{day}</b>
+                  </time>
                 ))}
-                {AUGUST_2026.map((day, index) =>
-                  day === null ? (
-                    <span
-                      className="calendar-grid__day calendar-grid__day--empty"
-                      key={`empty-${index}`}
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    <time
-                      className={`calendar-grid__day ${
-                        day === 29 ? "calendar-grid__day--wedding" : ""
-                      }`}
-                      dateTime={`2026-08-${String(day).padStart(2, "0")}`}
-                      aria-current={day === 29 ? "date" : undefined}
-                      key={day}
-                    >
-                      {day}
-                      {day === 29 && <span aria-hidden="true">♥</span>}
-                    </time>
-                  ),
-                )}
               </div>
-              <p className="calendar-card__date">29 августа — наша свадьба</p>
             </div>
           </div>
         </section>
@@ -581,14 +557,6 @@ export function WeddingInvitation({
         </section>
 
         <section className="schedule section">
-          <img
-            className="section-photo-background section-photo-background--wine-lace"
-            src={`${assetPrefix}/images/lace-wine-corners.png`}
-            alt=""
-            width={720}
-            height={1280}
-            aria-hidden="true"
-          />
           <div className="section__content section__content--wide" data-reveal>
             <span className="section-eyebrow">29 августа 2026</span>
             <h2>Программа дня</h2>
