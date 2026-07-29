@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Great_Vibes } from "next/font/google";
+import { Bad_Script, Great_Vibes } from "next/font/google";
 import "./globals.css";
 
-const serif = Cormorant_Garamond({
-  variable: "--font-serif",
+const handwriting = Bad_Script({
+  variable: "--font-hand",
   subsets: ["cyrillic", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: "400",
 });
 
 const script = Great_Vibes({
@@ -58,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${serif.variable} ${script.variable}`}>
+      <body className={`${handwriting.variable} ${script.variable}`}>
         {children}
       </body>
     </html>
