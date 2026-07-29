@@ -43,4 +43,6 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+/tmp/
 /.preview/
+/.preview-fixed/
