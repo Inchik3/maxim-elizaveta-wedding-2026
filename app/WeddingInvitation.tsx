@@ -119,9 +119,11 @@ function ScheduleIcon({ name }: { name: ScheduleIconName }) {
 function IntroEnvelope({
   state,
   onOpen,
+  assetPrefix,
 }: {
   state: "closed" | "opening";
   onOpen: () => void;
+  assetPrefix: string;
 }) {
   const handleKeyboard = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === " " || event.key === "Enter") {
@@ -141,13 +143,14 @@ function IntroEnvelope({
           <small>29 августа 2026</small>
         </div>
         <div className="envelope">
-          <div className="envelope__back" />
-          <div className="envelope__lace envelope__lace--left" />
-          <div className="envelope__lace envelope__lace--right" />
-          <div className="envelope__front envelope__front--left" />
-          <div className="envelope__front envelope__front--right" />
-          <div className="envelope__front envelope__front--bottom" />
-          <div className="envelope__flap" />
+          <img
+            className="envelope__art"
+            src={`${assetPrefix}/images/lace-envelope.png`}
+            alt=""
+            width={853}
+            height={1280}
+            aria-hidden="true"
+          />
           <button
             className="wax-seal"
             type="button"
@@ -396,7 +399,11 @@ export function WeddingInvitation({
   return (
     <>
       {introVisible && (
-        <IntroEnvelope state={introState} onOpen={openInvitation} />
+        <IntroEnvelope
+          state={introState}
+          onOpen={openInvitation}
+          assetPrefix={assetPrefix}
+        />
       )}
 
       <img
@@ -412,7 +419,14 @@ export function WeddingInvitation({
         <section className="hero" ref={heroRef} tabIndex={-1}>
           <div className="lace lace--hero-left" aria-hidden="true" />
           <div className="lace lace--hero-right" aria-hidden="true" />
-          <PearlString className="pearl-string--hero-top" />
+          <img
+            className="hero-pearl-scroll"
+            src={`${assetPrefix}/images/pearl-corners.png`}
+            alt=""
+            width={675}
+            height={1200}
+            aria-hidden="true"
+          />
           <PearlString className="pearl-string--hero-bottom" />
 
           <button
@@ -790,8 +804,8 @@ export function WeddingInvitation({
             className="finale__image"
             src={`${assetPrefix}/images/wedding-finale.png`}
             alt="Наша история — Максим и Елизавета, 29 августа 2026 года"
-            width={1086}
-            height={1448}
+            width={945}
+            height={1280}
             loading="lazy"
             data-reveal
           />
