@@ -20,7 +20,12 @@ const DRINKS = [
   "Свой вариант",
 ] as const;
 
-const WEDDING_WEEK = [27, 28, 29, 30, 31] as const;
+const AUGUST_2026 = [
+  ...Array.from({ length: 5 }, () => null),
+  ...Array.from({ length: 31 }, (_, index) => index + 1),
+];
+
+const WEEKDAYS = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"] as const;
 
 type Attendance = "" | "yes" | "no";
 type SubmitState = "idle" | "submitting" | "success" | "error";
@@ -506,26 +511,39 @@ export function WeddingInvitation({
         <section className="calendar-section section" aria-labelledby="calendar-title">
           <div className="calendar-card" data-reveal>
             <div className="calendar-card__content">
-              <h2 id="calendar-title">Август 2026</h2>
+              <span className="calendar-card__save">SAVE THE DATE</span>
+              <h2 id="calendar-title">
+                <time dateTime="2026-08-29">29 АВГУСТА 2026</time>
+              </h2>
               <div
-                className="calendar-strip"
-                aria-label="Дата свадьбы — 29 августа 2026"
+                className="calendar-month"
+                aria-label="Календарь на август 2026 года"
               >
-                {WEDDING_WEEK.map((day) => (
-                  <time
-                    className={`calendar-strip__day ${
-                      day === 29 ? "calendar-strip__day--wedding" : ""
-                    }`}
-                    dateTime={`2026-08-${day}`}
-                    aria-current={day === 29 ? "date" : undefined}
-                    key={day}
-                  >
-                    {day === 29 && (
-                      <span className="calendar-strip__heart" aria-hidden="true" />
-                    )}
-                    <b>{day}</b>
-                  </time>
+                {WEEKDAYS.map((weekday) => (
+                  <span className="calendar-month__weekday" key={weekday}>
+                    {weekday}
+                  </span>
                 ))}
+                {AUGUST_2026.map((day, index) =>
+                  day === null ? (
+                    <span
+                      className="calendar-month__day calendar-month__day--empty"
+                      aria-hidden="true"
+                      key={`empty-${index}`}
+                    />
+                  ) : (
+                    <time
+                      className={`calendar-month__day ${
+                        day === 29 ? "calendar-month__day--wedding" : ""
+                      }`}
+                      dateTime={`2026-08-${String(day).padStart(2, "0")}`}
+                      aria-current={day === 29 ? "date" : undefined}
+                      key={day}
+                    >
+                      {day}
+                    </time>
+                  ),
+                )}
               </div>
             </div>
           </div>
